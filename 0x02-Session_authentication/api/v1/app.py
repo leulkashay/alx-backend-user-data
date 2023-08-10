@@ -38,14 +38,14 @@ def before_request():
         return
     if auth.authorization_header(request) is None:
         abort(401)
-    if auth.current_user(request) is None:
-        abort(403)
 
     current_user = auth.current_user(request)
     print(current_user)
     if current_user is None:
         abort(403)
-    
+
+    request.current_user = current_user
+
 
 @app.errorhandler(404)
 def not_found(error) -> str:
